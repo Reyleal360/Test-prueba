@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T14:36:33-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.9 (Ubuntu)"
+    date = "2025-12-09T15:29:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class AffiliateMapperImpl implements AffiliateMapper {
@@ -23,16 +23,16 @@ public class AffiliateMapperImpl implements AffiliateMapper {
 
         Affiliate.AffiliateBuilder affiliate = Affiliate.builder();
 
-        affiliate.id( entity.getId() );
+        affiliate.createdAt( entity.getCreatedAt() );
         affiliate.documentNumber( entity.getDocumentNumber() );
-        affiliate.firstName( entity.getFirstName() );
-        affiliate.lastName( entity.getLastName() );
         affiliate.email( entity.getEmail() );
-        affiliate.phoneNumber( entity.getPhoneNumber() );
+        affiliate.firstName( entity.getFirstName() );
+        affiliate.id( entity.getId() );
+        affiliate.lastName( entity.getLastName() );
         affiliate.monthlySalary( entity.getMonthlySalary() );
+        affiliate.phoneNumber( entity.getPhoneNumber() );
         affiliate.seniority( entity.getSeniority() );
         affiliate.status( entity.getStatus() );
-        affiliate.createdAt( entity.getCreatedAt() );
         affiliate.updatedAt( entity.getUpdatedAt() );
 
         return affiliate.build();
@@ -46,16 +46,16 @@ public class AffiliateMapperImpl implements AffiliateMapper {
 
         AffiliateEntity.AffiliateEntityBuilder affiliateEntity = AffiliateEntity.builder();
 
-        affiliateEntity.id( domain.getId() );
+        affiliateEntity.createdAt( domain.getCreatedAt() );
         affiliateEntity.documentNumber( domain.getDocumentNumber() );
-        affiliateEntity.firstName( domain.getFirstName() );
-        affiliateEntity.lastName( domain.getLastName() );
         affiliateEntity.email( domain.getEmail() );
-        affiliateEntity.phoneNumber( domain.getPhoneNumber() );
+        affiliateEntity.firstName( domain.getFirstName() );
+        affiliateEntity.id( domain.getId() );
+        affiliateEntity.lastName( domain.getLastName() );
         affiliateEntity.monthlySalary( domain.getMonthlySalary() );
+        affiliateEntity.phoneNumber( domain.getPhoneNumber() );
         affiliateEntity.seniority( domain.getSeniority() );
         affiliateEntity.status( domain.getStatus() );
-        affiliateEntity.createdAt( domain.getCreatedAt() );
         affiliateEntity.updatedAt( domain.getUpdatedAt() );
 
         return affiliateEntity.build();

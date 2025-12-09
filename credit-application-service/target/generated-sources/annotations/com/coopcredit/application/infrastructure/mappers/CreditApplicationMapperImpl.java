@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T14:36:33-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.9 (Ubuntu)"
+    date = "2025-12-09T15:29:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class CreditApplicationMapperImpl implements CreditApplicationMapper {
@@ -31,16 +31,16 @@ public class CreditApplicationMapperImpl implements CreditApplicationMapper {
 
         creditApplication.affiliate( affiliateMapper.toDomain( entity.getAffiliate() ) );
         creditApplication.riskEvaluation( riskEvaluationMapper.toDomain( entity.getRiskEvaluation() ) );
-        creditApplication.id( entity.getId() );
-        creditApplication.requestedAmount( entity.getRequestedAmount() );
-        creditApplication.termMonths( entity.getTermMonths() );
-        creditApplication.purpose( entity.getPurpose() );
-        creditApplication.status( entity.getStatus() );
         creditApplication.applicationDate( entity.getApplicationDate() );
-        creditApplication.evaluationDate( entity.getEvaluationDate() );
         creditApplication.approvalAmount( entity.getApprovalAmount() );
-        creditApplication.monthlyQuota( entity.getMonthlyQuota() );
         creditApplication.debtToIncomeRatio( entity.getDebtToIncomeRatio() );
+        creditApplication.evaluationDate( entity.getEvaluationDate() );
+        creditApplication.id( entity.getId() );
+        creditApplication.monthlyQuota( entity.getMonthlyQuota() );
+        creditApplication.purpose( entity.getPurpose() );
+        creditApplication.requestedAmount( entity.getRequestedAmount() );
+        creditApplication.status( entity.getStatus() );
+        creditApplication.termMonths( entity.getTermMonths() );
 
         return creditApplication.build();
     }
@@ -55,16 +55,16 @@ public class CreditApplicationMapperImpl implements CreditApplicationMapper {
 
         creditApplicationEntity.affiliate( affiliateMapper.toEntity( domain.getAffiliate() ) );
         creditApplicationEntity.riskEvaluation( riskEvaluationMapper.toEntity( domain.getRiskEvaluation() ) );
-        creditApplicationEntity.id( domain.getId() );
-        creditApplicationEntity.requestedAmount( domain.getRequestedAmount() );
-        creditApplicationEntity.termMonths( domain.getTermMonths() );
-        creditApplicationEntity.purpose( domain.getPurpose() );
-        creditApplicationEntity.status( domain.getStatus() );
         creditApplicationEntity.applicationDate( domain.getApplicationDate() );
-        creditApplicationEntity.evaluationDate( domain.getEvaluationDate() );
         creditApplicationEntity.approvalAmount( domain.getApprovalAmount() );
-        creditApplicationEntity.monthlyQuota( domain.getMonthlyQuota() );
         creditApplicationEntity.debtToIncomeRatio( domain.getDebtToIncomeRatio() );
+        creditApplicationEntity.evaluationDate( domain.getEvaluationDate() );
+        creditApplicationEntity.id( domain.getId() );
+        creditApplicationEntity.monthlyQuota( domain.getMonthlyQuota() );
+        creditApplicationEntity.purpose( domain.getPurpose() );
+        creditApplicationEntity.requestedAmount( domain.getRequestedAmount() );
+        creditApplicationEntity.status( domain.getStatus() );
+        creditApplicationEntity.termMonths( domain.getTermMonths() );
 
         return creditApplicationEntity.build();
     }

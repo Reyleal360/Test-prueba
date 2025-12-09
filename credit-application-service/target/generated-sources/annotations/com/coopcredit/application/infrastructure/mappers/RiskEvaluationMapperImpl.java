@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-09T14:36:33-0500",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.9 (Ubuntu)"
+    date = "2025-12-09T15:29:51-0500",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class RiskEvaluationMapperImpl implements RiskEvaluationMapper {
@@ -21,12 +21,12 @@ public class RiskEvaluationMapperImpl implements RiskEvaluationMapper {
 
         RiskEvaluation.RiskEvaluationBuilder riskEvaluation = RiskEvaluation.builder();
 
-        riskEvaluation.id( entity.getId() );
-        riskEvaluation.riskScore( entity.getRiskScore() );
-        riskEvaluation.riskLevel( entity.getRiskLevel() );
         riskEvaluation.evaluationDate( entity.getEvaluationDate() );
         riskEvaluation.externalReference( entity.getExternalReference() );
+        riskEvaluation.id( entity.getId() );
         riskEvaluation.recommendation( entity.getRecommendation() );
+        riskEvaluation.riskLevel( entity.getRiskLevel() );
+        riskEvaluation.riskScore( entity.getRiskScore() );
 
         return riskEvaluation.build();
     }
@@ -39,12 +39,12 @@ public class RiskEvaluationMapperImpl implements RiskEvaluationMapper {
 
         RiskEvaluationEntity.RiskEvaluationEntityBuilder riskEvaluationEntity = RiskEvaluationEntity.builder();
 
-        riskEvaluationEntity.id( domain.getId() );
-        riskEvaluationEntity.riskScore( domain.getRiskScore() );
-        riskEvaluationEntity.riskLevel( domain.getRiskLevel() );
         riskEvaluationEntity.evaluationDate( domain.getEvaluationDate() );
         riskEvaluationEntity.externalReference( domain.getExternalReference() );
+        riskEvaluationEntity.id( domain.getId() );
         riskEvaluationEntity.recommendation( domain.getRecommendation() );
+        riskEvaluationEntity.riskLevel( domain.getRiskLevel() );
+        riskEvaluationEntity.riskScore( domain.getRiskScore() );
 
         return riskEvaluationEntity.build();
     }

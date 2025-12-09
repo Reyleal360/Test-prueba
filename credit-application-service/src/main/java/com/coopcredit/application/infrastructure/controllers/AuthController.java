@@ -9,6 +9,10 @@ import com.coopcredit.application.infrastructure.web.dto.auth.AuthResponse;
 import com.coopcredit.application.infrastructure.web.dto.auth.LoginRequest;
 import com.coopcredit.application.infrastructure.web.dto.auth.RegisterRequest;
 import com.coopcredit.application.infrastructure.services.CustomUserDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication", description = "Authentication endpoints for user registration and login")
 public class AuthController {
 
     private final RegisterUserUseCase registerUserUseCase;
@@ -36,6 +41,11 @@ public class AuthController {
     // Ideally authentication is an Application Service
 
     @PostMapping("/register")
+    @Operation(summary = "Register a new user", description = "Register a new user with username, email, and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request")
+    })
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         User user = User.builder()
                 .username(request.getUsername())
@@ -54,6 +64,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Login user", description = "Authenticate user with username and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login successful"),
+            @ApiResponse(responseCode = "401", description = "Invalid credentials")
+    })
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         // Typically AuthenticationManager.authenticate() is used here
         // We will call our UseCase or simpler, use the component
