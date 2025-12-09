@@ -91,12 +91,15 @@ public class RegisterCreditApplicationUseCaseImpl implements RegisterCreditAppli
                 application.getRequestedAmount(),
                 affiliate.getMonthlySalary());
 
-        riskEvaluation.setCreditApplication(application);
-        riskEvaluationRepositoryPort.save(riskEvaluation);
-        application.setRiskEvaluation(riskEvaluation);
-
         applyRiskRules(application, riskEvaluation);
-        applicationRepositoryPort.save(application);
+        
+        // Save application first to ensure it has an ID before saving risk evaluation
+        CreditApplication updatedApplication = applicationRepositoryPort.save(application);
+        
+        // Now save risk evaluation with the application ID
+        riskEvaluation.setCreditApplication(updatedApplication);
+        RiskEvaluation savedRiskEvaluation = riskEvaluationRepositoryPort.save(riskEvaluation);
+        updatedApplication.setRiskEvaluation(savedRiskEvaluation);
     }
 
     private void applyRiskRules(CreditApplication application, RiskEvaluation evaluation) {

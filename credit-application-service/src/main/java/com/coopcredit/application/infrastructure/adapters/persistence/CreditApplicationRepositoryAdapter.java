@@ -23,7 +23,10 @@ public class CreditApplicationRepositoryAdapter implements CreditApplicationRepo
     public CreditApplication save(CreditApplication creditApplication) {
         CreditApplicationEntity entity = mapper.toEntity(creditApplication);
         CreditApplicationEntity savedEntity = repository.save(entity);
-        return mapper.toDomain(savedEntity);
+        // Update the original object with the ID from the saved entity
+        creditApplication.setId(savedEntity.getId());
+        // Return the original object with the ID set
+        return creditApplication;
     }
 
     @Override
