@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: coopcredit_db
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -53,7 +53,7 @@ services:
       DDL_AUTO: "validate"
       SHOW_SQL: "false"
     ports:
-      - "8080:8080"
+      - "8082:8080"
     depends_on:
       mysql:
         condition: service_healthy
@@ -63,9 +63,53 @@ services:
       - coopcredit-network
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: coopcredit-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - coopcredit-network
+    depends_on:
+      - credit-application-service
+      - risk-central-mock
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: coopcredit-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_INSTALL_PLUGINS=
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - coopcredit-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
 networks:
   coopcredit-network:
     driver: bridge
 
 volumes:
   mysql-data:
+  prometheus-data:
+  grafana-data:

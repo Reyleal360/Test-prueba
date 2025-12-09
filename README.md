@@ -201,13 +201,64 @@ All logs are structured in JSON format with:
 - Message
 - Trace ID (for distributed tracing)
 
+## 📊 Monitoring & Observability
+
+CoopCredit includes a complete observability stack with Prometheus and Grafana.
+
+### Prometheus (Metrics Collection)
+
+- **URL**: http://localhost:9090
+- **Targets**: http://localhost:9090/targets
+- **Scrape Interval**: 15 seconds
+- **Retention**: 15 days
+
+**Metrics Available**:
+- JVM metrics (heap, threads, GC)
+- HTTP request metrics (rate, duration, errors)
+- Database connection pool (HikariCP)
+- Custom business metrics
+
+### Grafana (Visualization)
+
+- **URL**: http://localhost:3000
+- **Username**: `admin`
+- **Password**: `admin`
+- **Dashboard**: CoopCredit - Microservices Monitoring
+
+**Dashboard Panels**:
+1. HTTP Request Rate (both services)
+2. JVM Heap Memory Usage
+3. HTTP Request Duration (p95)
+4. JVM Threads
+5. Database Connection Pool
+6. Risk Service Metrics
+
+### Quick Queries
+
+```promql
+# Request rate
+rate(http_server_requests_seconds_count[1m])
+
+# Error rate
+sum(rate(http_server_requests_seconds_count{status=~"5.."}[1m]))
+
+# Average response time
+rate(http_server_requests_seconds_sum[1m]) / rate(http_server_requests_seconds_count[1m])
+
+# Database connection pool utilization
+(hikaricp_connections_active / hikaricp_connections_max) * 100
+```
+
+For detailed monitoring guide, see **[MONITORING.md](docs/MONITORING.md)**
+
 ## 📚 Documentation
 
 - **[Architecture - Hexagonal](docs/architecture-hexagonal.md)** - Ports & Adapters pattern
 - **[Use Cases](docs/use-cases.md)** - Business flows and actors
 - **[Microservices](docs/microservices-architecture.md)** - Service communication
 - **[Testing Guide](docs/TESTING.md)** - How to run and write tests
-- **[Swagger UI](http://localhost:8080/swagger-ui.html)** - Interactive API documentation
+- **[Monitoring Guide](docs/MONITORING.md)** - Prometheus & Grafana setup
+- **[Swagger UI](http://localhost:8082/swagger-ui.html)** - Interactive API documentation
 - **[Postman Collection](coopcredit-postman-collection.json)** - API testing collection
 
 ## 🐳 Docker Deployment
