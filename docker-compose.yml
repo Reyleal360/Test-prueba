@@ -4,17 +4,15 @@ services:
   mysql:
     image: mysql:8.0
     container_name: coopcredit-mysql
+    network_mode: host
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: coopcredit_db
-    ports:
-      - "3307:3306"
+      MYSQL_TCP_PORT: 3307
     volumes:
       - mysql-data:/var/lib/mysql
-    networks:
-      - coopcredit-network
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234" ]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3307", "-uroot", "-p1234" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,12 +22,9 @@ services:
       context: ./risk-central-mock-service
       dockerfile: Dockerfile
     container_name: risk-central-mock
+    network_mode: host
     environment:
       PORT: 8081
-    ports:
-      - "8081:8081"
-    networks:
-      - coopcredit-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8081/actuator/health" ]
@@ -42,32 +37,28 @@ services:
       context: ./credit-application-service
       dockerfile: Dockerfile
     container_name: credit-application-service
+    network_mode: host
     environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
+      DB_HOST: localhost
+      DB_PORT: 3307
       DB_NAME: coopcredit_db
       DB_USER: root
       DB_PASSWORD: 1234
-      RISK_CENTRAL_URL: http://risk-central-mock:8081
+      RISK_CENTRAL_URL: http://localhost:8081
       JWT_SECRET: CoopCreditSecureKeyForJWT2025MustBe256BitsLongMinimum1234567890
       DDL_AUTO: "validate"
       SHOW_SQL: "false"
-    ports:
-      - "8082:8080"
     depends_on:
       mysql:
         condition: service_healthy
       risk-central-mock:
         condition: service_healthy
-    networks:
-      - coopcredit-network
     restart: unless-stopped
 
   prometheus:
     image: prom/prometheus:latest
     container_name: coopcredit-prometheus
-    ports:
-      - "9090:9090"
+    network_mode: host
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data:/prometheus
@@ -77,8 +68,6 @@ services:
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
-    networks:
-      - coopcredit-network
     depends_on:
       - credit-application-service
       - risk-central-mock
@@ -87,8 +76,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: coopcredit-grafana
-    ports:
-      - "3000:3000"
+    network_mode: host
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
@@ -99,15 +87,9 @@ services:
       - grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
-    networks:
-      - coopcredit-network
     depends_on:
       - prometheus
     restart: unless-stopped
-
-networks:
-  coopcredit-network:
-    driver: bridge
 
 volumes:
   mysql-data:
