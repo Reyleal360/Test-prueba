@@ -51,7 +51,7 @@ public class CreditApplicationController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANALISTA')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'ANALISTA', 'AFILIADO')")
     @Operation(summary = "Get credit application by ID", description = "Retrieve a specific credit application by its ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Credit application found"),
@@ -63,7 +63,7 @@ public class CreditApplicationController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANALISTA')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'ANALISTA', 'AFILIADO')")
     @Operation(summary = "List all credit applications", description = "Retrieve all credit applications")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Credit applications retrieved successfully"),
