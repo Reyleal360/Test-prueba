@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: coopcredit-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: coopcredit_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - coopcredit-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p1234" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  risk-central-mock:
+    build:
+      context: ./risk-central-mock-service
+      dockerfile: Dockerfile
+    container_name: risk-central-mock
+    environment:
+      PORT: 8081
+    ports:
+      - "8081:8081"
+    networks:
+      - coopcredit-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8081/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  credit-application-service:
+    build:
+      context: ./credit-application-service
+      dockerfile: Dockerfile
+    container_name: credit-application-service
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: coopcredit_db
+      DB_USER: root
+      DB_PASSWORD: 1234
+      RISK_CENTRAL_URL: http://risk-central-mock:8081
+      JWT_SECRET: CoopCreditSecureKeyForJWT2025MustBe256BitsLongMinimum1234567890
+      DDL_AUTO: validate
+      SHOW_SQL: false
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      risk-central-mock:
+        condition: service_healthy
+    networks:
+      - coopcredit-network
+    restart: unless-stopped
+
+networks:
+  coopcredit-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
