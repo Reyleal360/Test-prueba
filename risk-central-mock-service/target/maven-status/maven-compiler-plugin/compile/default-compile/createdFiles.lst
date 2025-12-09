@@ -1,0 +1,8 @@
+com/coopcredit/riskcentral/RiskCentralMockServiceApplication.class
+com/coopcredit/riskcentral/service/RiskScoreService.class
+com/coopcredit/riskcentral/dto/RiskEvaluationResponse.class
+com/coopcredit/riskcentral/util/ScoreGenerator.class
+com/coopcredit/riskcentral/dto/RiskEvaluationRequest$RiskEvaluationRequestBuilder.class
+com/coopcredit/riskcentral/dto/RiskEvaluationResponse$RiskEvaluationResponseBuilder.class
+com/coopcredit/riskcentral/dto/RiskEvaluationRequest.class
+com/coopcredit/riskcentral/controller/RiskEvaluationController.class

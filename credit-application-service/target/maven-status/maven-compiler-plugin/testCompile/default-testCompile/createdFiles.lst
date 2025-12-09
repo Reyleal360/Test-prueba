@@ -1,0 +1,5 @@
+com/coopcredit/application/infrastructure/integration/CreditApplicationFlowIntegrationTest$1.class
+com/coopcredit/application/application/usecases/affiliates/RegisterAffiliateUseCaseImplTest.class
+com/coopcredit/application/infrastructure/integration/BaseIntegrationTest.class
+com/coopcredit/application/application/usecases/applications/RegisterCreditApplicationUseCaseImplTest.class
+com/coopcredit/application/infrastructure/integration/CreditApplicationFlowIntegrationTest.class

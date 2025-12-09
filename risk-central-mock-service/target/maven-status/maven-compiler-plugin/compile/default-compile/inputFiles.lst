@@ -1,0 +1,6 @@
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/RiskCentralMockServiceApplication.java
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/controller/RiskEvaluationController.java
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/dto/RiskEvaluationRequest.java
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/dto/RiskEvaluationResponse.java
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/service/RiskScoreService.java
+/home/Coder/Vídeos/Test-prueba/risk-central-mock-service/src/main/java/com/coopcredit/riskcentral/util/ScoreGenerator.java
