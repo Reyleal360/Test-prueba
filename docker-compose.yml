@@ -50,8 +50,8 @@ services:
       DB_PASSWORD: 1234
       RISK_CENTRAL_URL: http://risk-central-mock:8081
       JWT_SECRET: CoopCreditSecureKeyForJWT2025MustBe256BitsLongMinimum1234567890
-      DDL_AUTO: validate
-      SHOW_SQL: false
+      DDL_AUTO: "validate"
+      SHOW_SQL: "false"
     ports:
       - "8080:8080"
     depends_on:

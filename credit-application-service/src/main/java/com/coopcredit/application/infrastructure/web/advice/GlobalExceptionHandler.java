@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -19,6 +22,8 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .detail(ex.getMessage())
                 .instance(request.getDescription(false))
+                .timestamp(LocalDateTime.now())
+                .traceId(UUID.randomUUID().toString())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problem);
     }
@@ -31,6 +36,8 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .detail(ex.getMessage())
                 .instance(request.getDescription(false))
+                .timestamp(LocalDateTime.now())
+                .traceId(UUID.randomUUID().toString())
                 .build();
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
     }
@@ -43,6 +50,8 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST.value())
                 .detail(ex.getMessage())
                 .instance(request.getDescription(false))
+                .timestamp(LocalDateTime.now())
+                .traceId(UUID.randomUUID().toString())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
     }
@@ -55,6 +64,8 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .detail(ex.getMessage())
                 .instance(request.getDescription(false))
+                .timestamp(LocalDateTime.now())
+                .traceId(UUID.randomUUID().toString())
                 .build();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(problem);
     }
@@ -67,6 +78,8 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .detail("An unexpected error occurred.")
                 .instance(request.getDescription(false))
+                .timestamp(LocalDateTime.now())
+                .traceId(UUID.randomUUID().toString())
                 .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(problem);
     }

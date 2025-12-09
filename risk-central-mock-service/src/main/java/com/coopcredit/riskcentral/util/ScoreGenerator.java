@@ -25,7 +25,7 @@ public class ScoreGenerator {
 
         Random random = new Random(seed);
 
-        // Generate score between 100 and 1000
-        return 100 + random.nextInt(901);
+        // Generate score between 300 and 950 (as per requirements)
+        return 300 + random.nextInt(651);
     }
 }
