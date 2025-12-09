@@ -5,18 +5,33 @@ global:
     monitor: 'coopcredit-monitor'
 
 scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
   - job_name: 'credit-application-service'
     metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
     static_configs:
-      - targets: ['credit-application-service:8080']
+      - targets: ['localhost:8080']
         labels:
           application: 'credit-application-service'
           environment: 'development'
   
   - job_name: 'risk-central-mock-service'
     metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
     static_configs:
-      - targets: ['risk-central-mock:8081']
+      - targets: ['localhost:8081']
         labels:
           application: 'risk-central-mock-service'
+          environment: 'development'
+
+  - job_name: 'node-exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9100']
+        labels:
+          application: 'node-exporter'
           environment: 'development'

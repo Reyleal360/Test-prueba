@@ -55,6 +55,21 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: coopcredit-node-exporter
+    network_mode: host
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    restart: unless-stopped
+
   prometheus:
     image: prom/prometheus:latest
     container_name: coopcredit-prometheus
@@ -71,6 +86,7 @@ services:
     depends_on:
       - credit-application-service
       - risk-central-mock
+      - node-exporter
     restart: unless-stopped
 
   grafana:
